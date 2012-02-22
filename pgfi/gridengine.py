@@ -8,14 +8,17 @@ enable_hvmem = True # enable h_vmem as a consumable complex attribute
 master_slots = 1 # number of slots the master host should have.
 '''
 class GridEngineTweaks(ClusterSetup):
-    def __init__(self,enable_hvmem=True,master_slots=0):
-        self.enable_hvmem = enable_hvmem
+    def __init__(self,enable_hvmem="True",master_slots=0):
+        if enable_hvmem == "False":
+            self.enable_hvmem = False
+        else:
+            self.enable_hvmem = True
         self.master_slots = master_slots
         log.debug("enable_hvmem = %s , master_slots = %s" % (self.enable_hvmem, self.master_slots))
 
     def run(self, nodes, master, user, user_shell, volumes):
         self.set_master_slots(master,nodes)
-        self.enable_hvmem_f(master,nodes)
+        self.enable_hvmem_f(master,nodes) if self.enable_hvmem
 
     def set_master_slots(self,master,nodes):
         log.info("Setting the number of slots on master to %s" % self.master_slots)
