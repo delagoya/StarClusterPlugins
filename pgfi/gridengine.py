@@ -18,7 +18,8 @@ class GridEngineTweaks(ClusterSetup):
 
     def run(self, nodes, master, user, user_shell, volumes):
         self.set_master_slots(master,nodes)
-        self.enable_hvmem_f(master,nodes) if self.enable_hvmem
+         if self.enable_hvmem:
+            self.enable_hvmem_f(master,nodes)
 
     def set_master_slots(self,master,nodes):
         log.info("Setting the number of slots on master to %s" % self.master_slots)
