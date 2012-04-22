@@ -9,7 +9,7 @@ A set of plugins for [StarCluster](http://web.mit.edu/star/cluster/docs/latest/m
 If you currently do not have custom plugins
 
       cd $HOME/.starcluster/
-      git checkout git@github.com:delagoya/StarClusterPlugins.git plugins
+      git checkout git@github.com:PGFI/StarClusterPlugins.git plugins
 
 If you do have custom plugins, then you most certainly know what you are doing and can figure it out :)
 
@@ -22,5 +22,9 @@ In your plugins section of your StarCluster config file
       # one of True / False
       enable_hvmem = True
       master_slots = 1
+
+In your cluster profile section
+
+      PLUGINS = gridengine_tweaks
 
 Have fun!
