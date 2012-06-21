@@ -3,10 +3,12 @@ from starcluster.logger import log
 
 '''
 A StarCluster Plugin to enable h_vmem as a consumable.
-[plugin grindengine_tweaks]
-setup_class = pgfi.gridengine.GridEngineTweaks
-enable_hvmem = True # enable h_vmem as a consumable complex attribute
-master_slots = 1 # number of slots the master host should have.
+
+    [plugin grindengine_tweaks]
+    setup_class = pgfi.gridengine.GridEngineTweaks
+    enable_hvmem = True # enable h_vmem as a consumable complex attribute
+    master_slots = 1 # number of slots the master host should have.
+
 '''
 class GridEngineTweaks(ClusterSetup):
     def __init__(self,enable_hvmem="True",master_slots=0):
