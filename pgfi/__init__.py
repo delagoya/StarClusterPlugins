@@ -1,1 +1,1 @@
-__all__ = ["gridengine", "ephemeral","chef-solo"]
+__all__ = ["gridengine", "ephemeral","glusterfs"]
