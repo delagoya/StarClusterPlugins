@@ -2,7 +2,7 @@ from starcluster.clustersetup import ClusterSetup
 from starcluster.logger import log
 
 '''
-A StarCluster Plugin to enable h_vmem as a consumable.
+A StarCluster Plugin to enable h_vmem as a consumable, set the num of slots for the master, and create the make parallel environment
 
     [plugin grindengine_tweaks]
     setup_class = pgfi.gridengine.GridEngineTweaks
@@ -21,27 +21,44 @@ class GridEngineTweaks(ClusterSetup):
 
     def run(self, nodes, master, user, user_shell, volumes):
         if self.enable_hvmem:
-            self.enable_hvmem_f(master,nodes)
-        self.set_master_slots(master,nodes)
+            self._enable_hvmem(master,nodes)
+        self._set_master_slots(master)
+        self._make_pe(master)
 
-    def set_master_slots(self,master,nodes):
+    def _set_master_slots(self,master,):
         log.info("Setting the number of slots on master to %s" % self.master_slots)
         master.ssh.execute("qconf -mattr queue slots '[%s=%s]' all.q" % (master.alias, self.master_slots), source_profile=True)
 
-    def enable_hvmem_f(self,master,nodes):
+    def _enable_hvmem(self,master,nodes):
         log.info("Enabling h_vmem as a consumable")
         master.ssh.execute("qconf -sc > /tmp/complex.conf", source_profile=True)
         master.ssh.execute("sed -i.bak -E \"s/^(h_vmem.*)/h_vmem  h_vmem   MEMORY <=  YES  YES 1g 0/\" /tmp/complex.conf")
         master.ssh.execute("qconf -Mc /tmp/complex.conf", source_profile=True)
         log.info("Setting sge_request defaults")
-        default_sge_params = '''-q all.q
--l h_vmem=1g
--l h_stack=256m
-'''
-        master.ssh.execute('echo "' + default_sge_params + '"> $SGE_ROOT/$SGE_CELL/common/sge_request', source_profile=True)
+        master.ssh.execute('echo "-l h_vmem=1g" >>  $SGE_ROOT/$SGE_CELL/common/sge_request', source_profile=True)
+        master.ssh.execute('echo "-l h_stack=256m" >>  $SGE_ROOT/$SGE_CELL/common/sge_request', source_profile=True)
         # set the slots and h_vmem for the nodes
         for node in nodes:
             atts = (node.num_processors, node.memory, node.alias)
             if master.alias == node.alias:
                 atts = (self.master_slots, master.memory, master.alias)
             master.ssh.execute("qconf -rattr exechost complex_values slots=%s,h_vmem=%sm %s" % atts, source_profile=True)
+    def _make_pe(self,master):
+        log.info("Creating the make parallel environment")
+        template = '''pe_name            make
+slots              999
+user_lists         NONE
+xuser_lists        NONE
+start_proc_args    /bin/true
+stop_proc_args     /bin/true
+allocation_rule    $pe_slots
+control_slaves     FALSE
+job_is_first_task  TRUE
+urgency_slots      min
+accounting_summary FALSE
+'''
+        master.ssh.execute("echo '%s' > /tmp/make.pe" % template)
+        try:
+            master.ssh.execute("qconf -Ap /tmp/make.pe")
+        except Exception, e:
+            pass
