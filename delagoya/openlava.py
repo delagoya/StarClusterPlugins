@@ -34,7 +34,7 @@ DISABLE_QUEUE=True
 PLUGINS=openlava
 
 [plugin openlava]
-setup_class = pgfi.openlava.OpenLavaSetup
+setup_class = delagoya.openlava.OpenLavaSetup
 # Set the number of slots on the master node. Default = 0
 master_slots = 1
 # Tcl packages for build. For Ubuntu this defaults to 'tcl tcl-dev'.

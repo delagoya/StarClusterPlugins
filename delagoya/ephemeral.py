@@ -28,7 +28,7 @@ A StarCluster Plugin to format EC2 ephemeral storage as individual ext4 disks.
 Disks will be mounted as "/mnt/d{0,1,2,3}".
 
     [plugin ephemeral_scratch]
-    setup_class = pgfi.ephemeral.EphemeralScratch
+    setup_class = delagoya.ephemeral.EphemeralScratch
     mount_point = /mnt
 '''
 class EphemeralScratch(ClusterSetup):

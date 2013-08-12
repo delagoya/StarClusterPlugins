@@ -27,7 +27,7 @@ from starcluster.logger import log
 A StarCluster Plugin to install and configure jets3t on nodes
 
 [plugin jets3t]
-SETUP_CLASS = pgfi.jets3t.JetS3tSetup
+SETUP_CLASS = delagoya.jets3t.JetS3tSetup
 access_key = YOURACCESSKEY
 secret_key = YOURSECRETACCESSKEY
 '''

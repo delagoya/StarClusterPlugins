@@ -27,7 +27,7 @@ from starcluster.logger import log
 A StarCluster Plugin to enable h_vmem as a consumable, set the num of slots for the master, and create the make parallel environment
 
     [plugin grindengine_tweaks]
-    setup_class = pgfi.gridengine.GridEngineTweaks
+    setup_class = delagoya.gridengine.GridEngineTweaks
     enable_hvmem = True # enable h_vmem as a consumable complex attribute
     master_slots = 1 # number of slots the master host should have.
 

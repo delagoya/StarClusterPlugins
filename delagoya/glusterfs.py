@@ -29,7 +29,7 @@ from all of the nodes in the cluster. You need to also define a set
 of installed packages using the default package manager plugin, like so:
 
 [plugin glusterfs-install]
-SETUP_CLASS = pgfi.glusterfs.GlusterSetup
+SETUP_CLASS = delagoya.glusterfs.GlusterSetup
 mount_point = /glfs
 share_name = glfs
 bricks  = /mnt/d1, /mnt/d2, /mnt/d3, /mnt/d4
