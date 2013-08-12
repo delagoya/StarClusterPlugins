@@ -15,16 +15,25 @@ If you do have custom plugins, then you most certainly know what you are doing a
 
 ## Configuration
 
-In your plugins section of your StarCluster config file
+Refer to each plugin's documentation, but here is an example of one of the plugins
+for modification of your StarCluster config file:
 
-      [plugin gridengine_tweaks]
-      setup_class = pgfi.gridengine.GridEngineTweaks
-      # one of True / False
-      enable_hvmem = True
-      master_slots = 1
+
+```init
+[plugin gridengine_tweaks]
+setup_class = delagoya.gridengine.GridEngineTweaks
+# one of True / False
+enable_hvmem = True
+master_slots = 1
+``` 
 
 In your cluster profile section
-
-      PLUGINS = gridengine_tweaks
+```init
+PLUGINS = gridengine_tweaks
+```
 
 Have fun!
+
+## LICENSE 
+
+Licensed under the MIT license http://opensource.org/licenses/MIT. Refer to the `LICENSE` file for details.
