@@ -39,7 +39,7 @@ class NodeSlots(ClusterSetup):
     def run(self, nodes, master, user, user_shell, volumes):
         if self.num_slots:
             self._set_node_slots(master,nodes)
-    def _set_node_slots(self,master):
+    def _set_node_slots(self,master,nodes):
         log.info("Setting the number of slots on nodes to {0}".format(self.num_slots))
         for node in nodes:
             master.ssh.execute("qconf -mattr queue slots '[%s=%s]' all.q" % (node.alias, self.num_slots), source_profile=True)
