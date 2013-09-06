@@ -47,7 +47,7 @@ class GridEngineTweaks(ClusterSetup):
         self._set_master_slots(master)
         self._make_pe(master)
 
-    def _set_master_slots(self,master,):
+    def _set_master_slots(self,master):
         log.info("Setting the number of slots on master to %s" % self.master_slots)
         master.ssh.execute("qconf -mattr queue slots '[%s=%s]' all.q" % (master.alias, self.master_slots), source_profile=True)
 

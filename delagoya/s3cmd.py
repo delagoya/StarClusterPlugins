@@ -43,7 +43,7 @@ class S3CmdSetup(ClusterSetup):
             self._config(node)
 
     def _install(self,node):
-        node.package_install('s3cmd')
+        node.ssh.execute('pip install --pre --upgrade s3cmd')
 
     def _config(self,node):
         f = node.ssh.remote_file("/root/.s3cfg",'w')
