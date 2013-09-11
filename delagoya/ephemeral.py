@@ -34,6 +34,8 @@ Disks will be mounted as "/mnt/d{0,1,2,3}".
 class EphemeralScratch(ClusterSetup):
     INSTANCE_EPHEMERAL_DEVICES = {
         "t1.mirco" : [],
+        "m3.xlarge" : [],
+        "m3.2xlarge" : [],
         "m1.small" : ["/dev/xvdb"],
         "m1.large" : ["/dev/xvdb", "/dev/xvdc"] ,
         "m1.xlarge": ["/dev/xvdb","/dev/xvdc", "/dev/xvdd","/dev/xvde"],
@@ -46,7 +48,8 @@ class EphemeralScratch(ClusterSetup):
         "cc2.8xlarge" : ["/dev/xvdb","/dev/xvdc", "/dev/xvdd","/dev/xvde"],
         "cg1.4xlarge" : ["/dev/xvdb","/dev/xvdc"],
         "cr1.8xlarge" : ["/dev/xvdb","/dev/xvdc"],
-
+        "hi1.4xlarge" : ["/dev/xvdb","/dev/xvdc"],
+        "hs1.8xlarge" : ["/dev/xvd" + chr(97 + x) for x in range(1,25)],
     }
     def __init__(self,mount_point="/mnt"):
         self.mount_point = mount_point
